@@ -1,6 +1,6 @@
 {
   "name": "react-typescript-starter",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -16,8 +16,26 @@
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
+  "devDependencies": {
+    "autoprefixer": "^10.4.4",
+    "css-loader": "^6.7.1",
+    "css-minimizer-webpack-plugin": "^3.4.1",
+    "mini-css-extract-plugin": "^2.6.0",
+    "node-sass": "^7.0.1",
+    "npm-run-all": "^4.1.5",
+    "postcss-loader": "^6.2.1",
+    "sass-loader": "^12.6.0",
+    "tailwindcss": "^3.0.23",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2"
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "build:css": "webpack --mode=production --node-env=production",
+    "build:css-dev": "webpack --mode=production --node-env=development",
+    "watch:css": "webpack --mode=production --node-env=spy",
+    "start": "npm-run-all --parallel watch:css start:react",
+    "start:react": "react-scripts start",
+    "prebuild": "npm-run-all build:css",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
