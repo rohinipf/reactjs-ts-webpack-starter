@@ -1,0 +1,15 @@
+.spinner {
+  @apply fixed top-0 left-0 w-full h-full flex items-center justify-center;
+  z-index: 999999;
+  background: rgba(0, 0, 0, 0.5);
+
+  .loader {
+    @apply text-white overflow-hidden rounded-full m-auto relative;
+    font-size: 90px;
+    text-indent: -9999em;
+    width: 1em;
+    height: 1em;
+    transform: translateZ(0);
+    animation: loadAnim 1.7s infinite ease, spinAnim 1.7s infinite ease;
+  }
+}
