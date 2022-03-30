@@ -1,4 +1,5 @@
 import Container from "./Container"
 import Loader from "./Loader"
+import Toast from "./Toast"
 
-export { Container, Loader }
+export { Container, Loader, Toast }

@@ -4,6 +4,7 @@ import { PersistGate } from "redux-persist/integration/react"
 import { store, history, persistor } from "./redux/store"
 import { BrowserRouter } from "react-router-dom"
 import Router from "./router"
+import { Toast } from "./components/atoms"
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
             history={history}
             // basename={process.env.PUBLIC_URL}
           />
+          <Toast />
         </BrowserRouter>
       </PersistGate>
     </Provider>
