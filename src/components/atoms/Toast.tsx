@@ -8,6 +8,7 @@ const Toast = () => {
       transition={Slide}
       autoClose={4500}
       position={toast.POSITION.TOP_CENTER}
+      theme="colored"
     />
   )
 }
