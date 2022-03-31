@@ -1,6 +1,8 @@
 import React, { Suspense, lazy, useCallback } from "react"
 import { Switch, Route, Redirect } from "react-router-dom"
 import { ConnectedRouter } from "connected-react-router"
+import { connect } from "react-redux"
+import { history } from "./redux/store"
 
 // UI
 import { Container, Loader } from "./components/atoms"
@@ -46,7 +48,7 @@ const PublicSwitch = () => {
 }
 
 const AppRouter = (props: any) => {
-  const { history, loader } = props
+  const { loader } = props
 
   const NavigationContainer = useCallback((navProps: { role: string }) => {
     // Switch navigation container based on user authentication and role
@@ -70,4 +72,12 @@ const AppRouter = (props: any) => {
   )
 }
 
-export default AppRouter
+const mapStateToProps = (state: any) => {
+  return {
+    loader: state.App.loader,
+    token: state.Auth.access_token,
+    role: state.Auth.role,
+  }
+}
+
+export default connect(mapStateToProps, null)(AppRouter)
