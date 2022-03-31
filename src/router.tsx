@@ -47,24 +47,43 @@ const PublicSwitch = () => {
 }
 
 const AppRouter = (props: any) => {
-  const { loader, history } = props
+  const { loader, history, role, access_token } = props
 
-  const NavigationContainer = useCallback((navProps: { role: string }) => {
-    // Switch navigation container based on user authentication and role
-    switch (navProps.role) {
-      case "admin":
-        return <AdminSwitch />
-      default:
-        return <PublicSwitch />
+  const NavigationContainer = useCallback(
+    (navProps: { role: string }) => {
+      // Switch navigation container based on user authentication and role
+      switch (navProps.role) {
+        case "admin":
+          return <AdminSwitch />
+        default:
+          return <PublicSwitch />
+      }
+    },
+    [role]
+  )
+
+  // start: check if user accessing protected routes when login fail
+  const exceptionPaths = ["/", "/forgotpassword", "/resetpassword"]
+  let location = window.location
+
+  if (access_token === null && exceptionPaths.indexOf(location.pathname) < 0) {
+    history.push("/")
+  } else {
+    if (
+      access_token === null &&
+      exceptionPaths.indexOf(location.pathname) < 0
+    ) {
+      history.push("/")
     }
-  }, [])
+  }
+  // end
 
   return (
     <Suspense fallback={<Loader />}>
       <ConnectedRouter history={history}>
         <Container>
           {loader && <Loader />}
-          <NavigationContainer role={""} />
+          <NavigationContainer role={role} />
         </Container>
       </ConnectedRouter>
     </Suspense>
@@ -74,7 +93,7 @@ const AppRouter = (props: any) => {
 const mapStateToProps = (state: any) => {
   return {
     loader: state.App.loader,
-    token: state.Auth.access_token,
+    access_token: state.Auth.access_token,
     role: state.Auth.role,
   }
 }

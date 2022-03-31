@@ -33,7 +33,7 @@ const AppPersistConfig = {
 const AuthPersistConfig = {
   key: "Auth",
   storage,
-  whitelist: [],
+  whitelist: ["role", "access_token"],
 }
 
 const rootReducer = combineReducers({
