@@ -1,8 +1,7 @@
-import { createStore, combineReducers, applyMiddleware } from "redux"
+import { createStore, combineReducers, applyMiddleware, compose } from "redux"
 import { persistStore, persistReducer } from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import thunk from "redux-thunk"
-import { composeWithDevTools } from "@redux-devtools/extension"
 
 import { createBrowserHistory } from "history"
 import { createReduxHistoryContext } from "redux-first-history"
@@ -43,11 +42,13 @@ const rootReducer = combineReducers({
 })
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
+const composeEnhancers =
+  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 const store = createStore(
   persistedReducer,
   undefined,
-  composeWithDevTools(applyMiddleware(...middlewares))
+  composeEnhancers(applyMiddleware(...middlewares))
 )
 
 const persistor = persistStore(store)
